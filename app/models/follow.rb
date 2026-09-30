@@ -8,7 +8,6 @@ class Follow < ApplicationRecord
   validates :follower_id, presence: true
   validates :followed_id, presence: true
 
-  # Prevent users from following themselves
   validate :cannot_follow_self
 
   private

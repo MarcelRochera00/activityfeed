@@ -13,12 +13,12 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :goals, dependent: :destroy
 
-  # Active Relationships (People I follow, I am the follower)
+  # Active Relationships
   has_many :active_relationships, class_name: "Follow", foreign_key: "follower_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
 
 
-  # Passive Relationships (People following me, I am the followed)
+  # Passive Relationships
   has_many :passive_relationships, class_name: "Follow", foreign_key: "followed_id", dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower
 
