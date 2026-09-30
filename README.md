@@ -112,6 +112,27 @@ The feed preloads its associations to avoid common N+1 query issues, and counter
 - [Setlist.fm](https://www.setlist.fm/) for artist and setlist search
 - [Leaflet](https://leafletjs.com/) for map rendering
 
-## Notes for Reviewers
+## Screenshots and Demos
+
+### Hike Post Details
+<img width="1672" alt="hike_post" src="https://github.com/user-attachments/assets/dbd91052-ef2d-4a6b-8817-85663541c736" />
+
+Published post view showing rich text and custom hike data, including uploaded path visualization.
+
+---
+
+### Dark and light Mode
+<img width="1685" alt="toggle_dark_mode" src="https://github.com/user-attachments/assets/676e9163-e467-4280-a186-e43540169a98" />
+
+Dynamic dark and light theme toggling with smooth transitions.
+
+---
+
+### Main feed and profile interaction
+<img width="1685" alt="feed" src="https://github.com/user-attachments/assets/2df1444d-8297-4b9c-9f7a-8e66cf05e9d6" />
+
+Interactive main feed supporting likes, comments, and tag-based filtering. Profile also displays goals, short description and profile pictures for customization.
+
+## Final notes
 
 This repository is shared to show my work learning Rails through a project larger than a tutorial. The codebase intentionally includes both completed functionality and a visible roadmap so that the technical decisions, current limits, and next iterations are clear.
