@@ -70,6 +70,6 @@ gem "devise", "~> 5.0"
 
 gem "faraday"
 
-gem "friendly_id", "~> 5.6"
+gem "friendly_id", "~> 5.7"
 
 gem "pagy", "~> 43.5"
