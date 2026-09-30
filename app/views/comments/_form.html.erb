@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "comment-form-#{activity.id}" do %>
+  <div class="comment-form-container">
+    <div class="comment-avatar">
+      <%= image_tag avatar_url(current_user), alt: current_user.username %>
+    </div>
+    <div class="comment-form-wrap">
+      <%= form_with model: [activity, comment], url: activity_comments_path(activity), class: "comment-form" do |f| %>
+        <div class="form-group">
+          <%= f.text_area :body, placeholder: "Add a comment...", rows: 2, class: "comment-textarea", required: true %>
+        </div>
+        <div class="comment-submit">
+          <%= f.submit "Post", class: "btn-submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

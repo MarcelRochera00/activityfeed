@@ -1,0 +1,169 @@
+<% content_for :title, "#{@user.username}'s Profile" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "profile", "goals" %>
+<% end %>
+
+
+
+<%= render "feed/header", current_user: current_user %>
+
+<div class="profile-container">
+  <div class="profile-layout">
+    
+    <!-- Sidebar: Left -->
+    <aside class="profile-sidebar">
+      <div class="profile-card">
+        <div class="profile-avatar-large">
+          <%= image_tag avatar_url(@user), alt: @user.username %>
+        </div>
+        
+        <h1 class="profile-name">
+          <%= @user.username.presence || "Anonymous" %>
+        </h1>
+        <p class="profile-handle">@<%= @user.email.split('@').first %></p>
+        
+        <div class="profile-bio">
+          <%= @user.description.presence || "No description provided yet." %>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <%= render "users/follow_button", user: @user %>
+        </div>
+
+        <%= render "users/stats", user: @user %>
+
+        <div class="profile-details">
+          <% if @user.location.present? %>
+            <div class="detail-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <%= @user.location %>
+            </div>
+          <% end %>
+          <div class="detail-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Joined <strong><%= @user.created_at.strftime("%B %Y") %></strong>
+          </div>
+          <div class="detail-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+            <strong><%= @user.activities.count %></strong> activities
+          </div>
+        </div>
+
+        <% if @is_profile %>
+          <div class="dropdown" data-controller="dropdown" style="position: absolute; top: 1rem; right: 1rem;">
+            <button class="dropdown-btn" title="Profile options" data-action="click->dropdown#toggle">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>
+              </svg>
+            </button>
+            <div class="dropdown-content" data-dropdown-target="menu">
+              <%= link_to edit_profile_path(@user.username), class: "dropdown-item" do %>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                <span>Edit Profile</span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <%= link_to feed_path, style: "text-decoration: none; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;" do %>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to feed
+        <% end %>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+      <turbo-frame id="feed_activities" target="_top">
+        <p class="section-label">Published Activities</p>
+      
+      <div id="activities">
+        <% if @activities.any? %>
+          <%= render partial: "activities/activity", collection: @activities, locals: { show_user: false, show_actions: true } %>
+        <% else %>
+          <div style="padding: 4rem 2rem; text-align: center; background: var(--white); border-radius: var(--radius-lg); border: 1px dashed var(--border);">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">No activities published yet.</p>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @pagy.next %>
+        <div id="next_link" style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+          <%= link_to "Loading more...", profile_path(username: @user.username, page: @pagy.next, q: params[:q]), data: { turbo_stream: true, controller: "infinite-scroll" }, class: "btn-qa-text" %>
+        </div>
+      <% end %>
+      </turbo-frame>
+    </main>
+
+    <!-- Sidebar: Right -->
+    <aside class="profile-right-sidebar">
+
+      <%# ── Island 1: Active Goals ─────────────────────────────────────
+          Only shown to the profile owner. The data-goal-manager-target="island"
+          attribute is what the Stimulus controller grabs to toggle .delete-mode. %>
+      <% if @is_profile %>
+        <div class="goals-island" data-controller="goal-manager" data-goal-manager-target="island" style="margin-bottom: 1rem;">
+
+          <%# 3-dot options dropdown — positioned absolute to the island card %>
+          <div class="dropdown" data-controller="dropdown">
+            <button class="dropdown-btn" title="Goal options" data-action="click->dropdown#toggle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>
+              </svg>
+            </button>
+            <div class="dropdown-content" data-dropdown-target="menu" style="right: 0;">
+              <%= link_to new_goal_path, class: "dropdown-item" do %>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>New Goal</span>
+              <% end %>
+              <button class="dropdown-item text-danger"
+                      data-action="click->goal-manager#toggleDeleteMode"
+                      style="width: 100%; text-align: left; background: none; border: none; font-family: inherit;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Delete Goals</span>
+              </button>
+            </div>
+          </div>
+
+          <p class="section-label">Activity Goals</p>
+
+          <div id="sidebar_active_goals" class="sidebar-goals-list">
+            <% if @active_goals.any? %>
+              <% @active_goals.each do |goal| %>
+                <%= render "profiles/sidebar_goal", goal: goal %>
+              <% end %>
+            <% else %>
+              <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 2rem 0;">
+                No active goals yet.<br>
+                <%= link_to "Set one →", new_goal_path, style: "color: var(--brand-accent); font-weight: 600;" %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <%# ── Island 2: Achievements / Medals ─────────────────────────────
+          Visible to everyone (public profile) if the user has completed goals.
+          Each medal dot uses goal-type-<ActivityType> for its ring color. %>
+      <% if @completed_goals.any? %>
+        <div class="goals-island">
+          <p class="section-label">🏆 Achievements</p>
+          <div class="medals-grid">
+            <% @completed_goals.each do |goal| %>
+              <div class="medal-dot goal-type-<%= goal.activity_type %>"
+                   data-type="<%= goal.activity_type %>"
+                   title="<%= goal.description %> · Completed <%= time_ago_in_words(goal.completed_at) %> ago">
+                🥇
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+    </aside>
+
+
+  </div>
+</div>

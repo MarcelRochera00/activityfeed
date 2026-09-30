@@ -1,0 +1,264 @@
+/* ═══════════════════════════════════════════════════
+   Activity Type Color System — used ONLY for medal rings
+   Goal items are neutral; medals get a subtle colored ring.
+   ═══════════════════════════════════════════════════ */
+
+.goal-type-Concert    { --goal-color: #f59e0b; }
+.goal-type-Reading    { --goal-color: #3b82f6; }
+.goal-type-Hike       { --goal-color: #10b981; }
+.goal-type-Other      { --goal-color: #8b5cf6; }
+.goal-type-Restaurant { --goal-color: #f43f5e; }
+.goal-type-Artwork    { --goal-color: #ec4899; }
+.goal-type-Recipe     { --goal-color: #ea580c; }
+
+/* ═══════════════════════════════════════════════════
+   Floating Islands — the two containers in the sidebar
+   These are PLAIN cards. No hover lift on the container.
+   ═══════════════════════════════════════════════════ */
+
+.goals-island {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  /* No hover lift here — lifting an entire sidebar island feels wrong */
+}
+
+/* The 3-dot dropdown anchored to top-right of the island */
+.goals-island .dropdown {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+/* ═══════════════════════════════════════════════════
+   Goals List scroll container
+   ═══════════════════════════════════════════════════ */
+
+.sidebar-goals-list {
+  max-height: 340px;
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* ═══════════════════════════════════════════════════
+   Individual Goal Cards — each one is its own separated item
+   ═══════════════════════════════════════════════════ */
+
+.sidebar-goal-item {
+  position: relative;
+  background: var(--slate-50);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  transition: border-color 0.15s ease;
+}
+
+.sidebar-goal-item:hover {
+  border-color: var(--slate-300);
+}
+
+.sidebar-goal-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.65rem;
+  color: var(--text-primary);
+  display: block;
+  padding-right: 1.5rem; /* room for delete X */
+  line-height: 1.4;
+}
+
+/* Activity type label — plain muted text, no color accent */
+.goal-type-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+/* ═══════════════════════════════════════════════════
+   Delete Button (the small ✕ in delete-mode)
+   Hidden by default, revealed when .delete-mode is active
+   ═══════════════════════════════════════════════════ */
+
+.goal-delete-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.goal-delete-btn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+/* Show the delete button only when the island has delete-mode */
+.goals-island.delete-mode .goal-delete-btn {
+  display: flex;
+}
+
+/* Shake animation hint when entering delete mode */
+@keyframes deleteShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+.goals-island.delete-mode .sidebar-goal-item {
+  animation: deleteShake 0.25s ease;
+}
+
+/* ═══════════════════════════════════════════════════
+   Progress Bars
+   ═══════════════════════════════════════════════════ */
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.progress-track {
+  height: 4px;
+  background: var(--slate-200);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  /* Single brand accent — clean, consistent with the rest of the app */
+  background: var(--brand-accent);
+  border-radius: 999px;
+  transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ═══════════════════════════════════════════════════
+   Achievements / Medals Island
+   ═══════════════════════════════════════════════════ */
+
+.medals-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.medal-dot {
+  width: 36px;
+  height: 36px;
+  /* Uses activity type color as a ring */
+  background: var(--goal-bg, var(--slate-50));
+  border: 2px solid var(--goal-color, var(--border));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  cursor: default;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.medal-dot:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 3px var(--goal-color, var(--border));
+}
+
+/* Tooltip via title is native, but add a visual pop indicator */
+.medal-dot::after {
+  content: attr(data-type);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.medal-dot:hover::after {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════
+   Medal count badge on the username
+   ═══════════════════════════════════════════════════ */
+
+.medal-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  background: #f59e0b;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 0 0.3rem;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  letter-spacing: 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   New Goal form submit button
+   ═══════════════════════════════════════════════════ */
+
+.btn-submit-goal {
+  background: var(--brand-accent);
+  color: white;
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-submit-goal:hover {
+  filter: brightness(1.1);
+}

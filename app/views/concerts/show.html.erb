@@ -1,0 +1,72 @@
+<% content_for :title, @activity.title %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "activity_show" %>
+<% end %>
+
+<%= render "feed/header", current_user: current_user %>
+
+<div class="show-container">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+    <% back_path = (@activity.user == current_user) ? profile_path(username: @activity.user.username) : feed_path %>
+    <%= link_to back_path, class: "btn-back" do %>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <%= (@activity.user == current_user) ? "Back to profile" : "Back to feed" %>
+    <% end %>
+
+    <%= render "activities/actions", activity: @activity %>
+  </div>
+
+  <div class="show-layout">
+    <!-- Main Content -->
+    <main>
+      <%= render "activities/activity_content", activity: @activity %>
+
+      <div class="show-footer">
+        <div class="card-stats">
+          <%= render partial: "likes/like_button", locals: { activity: @activity, size: 18 } %>
+          <%= link_to "#comments_section", class: "stat-btn" do %>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span id="comments_count_btn"><%= @activity.comments.count %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <%= render "comments/comments_section", activity: @activity %>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="show-sidebar">
+      <div class="concert-details-card">
+        <div class="box-title">
+          Concert Details
+        </div>
+        <div class="detail-group">
+          <span class="detail-label">Artist</span>
+          <span class="detail-value"><%= @concert.artist %></span>
+        </div>
+        <div class="detail-group">
+          <span class="detail-label">Date</span>
+          <span class="detail-value"><%= @concert.date.strftime("%B %d, %Y") %></span>
+        </div>
+        <div class="detail-group" style="grid-column: 1 / -1;">
+          <span class="detail-label">Venue</span>
+          <span class="detail-value"><%= @concert.venue %></span>
+        </div>
+        
+        <% if @concert.tracklist.present? %>
+          <div class="tracklist-wrap">
+            <span class="detail-label">Setlist</span>
+            <div class="tracklist-vertical">
+              <% @concert.tracklist.each_with_index do |song, index| %>
+                <div class="track-item">
+                  <span class="track-num"><%= index + 1 %></span>
+                  <span class="track-name"><%= song %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </aside>
+  </div>
+</div>

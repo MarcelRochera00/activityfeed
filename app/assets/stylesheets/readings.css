@@ -1,0 +1,183 @@
+/* ── Reading Specific Styles ─────────────────────────────── */
+
+.reading-info-box {
+  background: var(--slate-50); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 1.5rem; margin-bottom: 2rem;
+}
+
+.box-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-muted); 
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--slate-100);
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Book Search Header */
+.book-search-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.search-option {
+  padding: 0.75rem 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: relative;
+  transition: color 0.2s;
+  font-family: 'Inter', sans-serif; /* Mimicking button font application */
+}
+
+.search-option:hover {
+  color: var(--text-primary);
+}
+
+.search-option.active {
+  color: var(--text-primary);
+}
+
+.search-option.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #f97316; /* Orange 500 */
+}
+
+/* Book Search Bar */
+.book-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Show Page Sidebar Card */
+.activity-details-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.book-cover-mini {
+  width: 100%;
+  height: auto;
+  background: var(--slate-100);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.detail-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Book Results Selection (Mirroring Concert Selection) */
+.book-results-container {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.book-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.book-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.book-item:hover { 
+  border-color: var(--slate-300); 
+  background: var(--slate-50); 
+}
+
+.book-item.selected {
+  border-color: #f97316;
+  background: #fffaf5;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.05);
+}
+
+.book-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--slate-300);
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.book-item.selected .book-dot {
+  background: #f97316;
+  transform: scale(1.2);
+}
+
+.book-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.book-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.book-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Override brand colors for Reading (using orange theme) */
+.reading-page .brand-icon { background: #f97316; }
+.reading-page .input-title:focus { border-color: #f97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
+.reading-page .dropzone:hover { border-color: #f97316; }
+.reading-page .dropzone.dragover { border-color: #f97316; }
+.reading-page .rte-btn.active { color: #f97316; }
+.reading-page .input-tags:focus { border-color: #f97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
+.reading-page .tag-dropdown-item:hover { color: #f97316; }
+.reading-page .btn-publish { background: #f97316; border-color: #f97316; }
+.reading-page .btn-publish:hover { background: #ea580c; border-color: #ea580c; }

@@ -1,0 +1,12 @@
+<%= turbo_stream.append "comments_list" do %>
+  <%= render @comment %>
+<% end %>
+<%= turbo_stream.replace "comment-form-#{@activity.id}" do %>
+  <%= render "comments/form", activity: @activity, comment: Comment.new %>
+<% end %>
+<%= turbo_stream.update "comments_count_btn" do %>
+  <%= @activity.comments.count %>
+<% end %>
+<%= turbo_stream.append "flash-container" do %>
+  <%= render "shared/flash" %>
+<% end %>

@@ -1,0 +1,290 @@
+<% content_for :title, "Edit Hike - #{@hike.trail_name}" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "activities", "hikes" %>
+<% end %>
+
+<div class="hike-page">
+  <!-- Nav -->
+  <nav class="create-nav">
+    <div class="nav-left">
+      <%= link_to feed_path, class: "brand-logo" do %>
+        <div class="brand-icon">⛰️</div>
+        <span class="brand-name">ActivityFeed</span>
+      <% end %>
+      <span class="nav-sep">/</span>
+      <span class="nav-label">Edit Hike</span>
+    </div>
+    <%= link_to hike_path(@hike.activity), class: "btn-cancel" do %>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Cancel
+    <% end %>
+  </nav>
+
+  <!-- Body -->
+  <div class="create-page">
+    <div class="create-header">
+      <h1>Edit Hike</h1>
+      <p>Updating details for <strong><%= @hike.trail_name %></strong></p>
+    </div>
+
+    <%= form_with model: @hike, local: true, id: "edit_hike_form" do |f| %>
+      
+      <div class="form-section">
+        <label class="form-label">Mode Selection</label>
+        <div class="mode-toggle">
+          <button type="button" class="mode-btn active" id="btn_mode_manual">Manual Edit</button>
+          <button type="button" class="mode-btn" id="btn_mode_gpx">Re-upload GPX</button>
+        </div>
+      </div>
+
+      <!-- GPX Panel (Hidden by default in edit mode) -->
+      <div id="mode_gpx_panel" style="display: none; margin-bottom: 2rem;">
+        <div class="dropzone" id="gpx_dropzone">
+          <input type="file" id="gpx_file_input" accept=".gpx" style="display: none;">
+          <div class="dropzone-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          </div>
+          <span class="dropzone-label" id="gpx_dropzone_label">Click or drop a new .gpx file to update route</span>
+        </div>
+      </div>
+
+      <!-- Manual Panel (Default in edit mode) -->
+      <div id="mode_manual_panel">
+        <div class="form-grid">
+          <div class="form-section">
+            <label class="form-label">Trail Name</label>
+            <input type="text" id="manual_trail_name" value="<%= @hike.trail_name %>" class="input-field" placeholder="e.g. Pacific Crest Trail">
+          </div>
+          <div class="form-section">
+            <label class="form-label">Distance (km)</label>
+            <input type="number" step="0.1" id="manual_distance_km" value="<%= @hike.distance_km %>" class="input-field" placeholder="0.0">
+          </div>
+          <div class="form-section">
+            <label class="form-label">Elevation Gain (m)</label>
+            <input type="number" id="manual_elevation_gain" value="<%= @hike.elevation_gain %>" class="input-field" placeholder="0">
+          </div>
+          <div class="form-section">
+            <label class="form-label">Duration</label>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <% 
+                  match = @hike.duration&.match(/(?:(\d+)h)?\s*(?:(\d+)m)?/)
+                  h = match ? match[1] : ''
+                  m = match ? match[2] : ''
+                %>
+                <input type="number" id="hike_duration_hours" value="<%= h %>" class="input-field" placeholder="H" style="width: 60px;">
+                <span class="text-muted" style="font-size: 0.8rem;">h</span>
+                <input type="number" id="hike_duration_minutes" value="<%= m %>" class="input-field" placeholder="M" style="width: 60px;">
+                <span class="text-muted" style="font-size: 0.8rem;">m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden Data Fields -->
+      <%= f.hidden_field :trail_name, id: "hike_trail_name" %>
+      <%= f.hidden_field :distance_km, id: "hike_distance_km" %>
+      <%= f.hidden_field :elevation_gain, id: "hike_elevation_gain" %>
+      <%= f.hidden_field :duration, id: "hike_duration" %>
+      <%= f.hidden_field :route, id: "hike_route" %>
+
+      <!-- Nested Activity Attributes -->
+      <%= f.fields_for :activity do |af| %>
+        <%= af.hidden_field :id %>
+
+        <div class="form-section">
+          <label class="form-label">Review Title</label>
+          <%= af.text_field :title, placeholder: "Title for your hike post...", class: "input-title", required: true %>
+        </div>
+
+        <div class="form-section">
+          <label class="form-label">Cover Photo</label>
+          <div class="dropzone" 
+               data-controller="dropzone"
+               data-action="click->dropzone#browse dragover->dropzone#dragover dragleave->dropzone#dragleave drop->dropzone#drop">
+            
+            <%= af.file_field :preview_image, 
+                id: "activity_preview_image", 
+                accept: "image/*",
+                data: { dropzone_target: "input", action: "change->dropzone#handleFile" },
+                style: "display: none;" %>
+            
+            <!-- Preview -->
+            <div class="preview-image-container <%= 'hidden' unless @hike.activity.preview_image.attached? %>" data-dropzone-target="preview">
+              <img data-dropzone-target="previewImage" src="<%= @hike.activity.preview_image.attached? ? url_for(@hike.activity.preview_image) : '#' %>" alt="Preview">
+              <button type="button" class="preview-remove" data-action="click->dropzone#remove">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+
+            <!-- Placeholder -->
+            <div data-dropzone-target="placeholder" class="<%= 'hidden' if @hike.activity.preview_image.attached? %>" style="display: flex; flex-direction: column; align-items: center; gap: 0.6rem;">
+              <div class="dropzone-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <span class="dropzone-label">Drop a cover photo or click to browse</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section" data-controller="rte">
+          <label class="form-label">Story / Review</label>
+          <div class="rte-wrap">
+            <div class="rte-toolbar" id="rte_toolbar">
+              <button type="button" class="rte-btn" title="Bold" data-action="click->rte#execCommand" data-command="bold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 12a4 4 0 0 0 0-8H6v8"/><path d="M15 20a4 4 0 0 0 0-8H6v8Z"/></svg></button>
+              <button type="button" class="rte-btn" title="Italic" data-action="click->rte#execCommand" data-command="italic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="15" x2="9" y1="4" y2="20"/></svg></button>
+              <div class="rte-sep"></div>
+              <button type="button" class="rte-btn" title="Heading" data-action="click->rte#execCommand" data-command="formatBlock" data-value="h3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/></svg></button>
+              <div class="rte-sep"></div>
+              <button type="button" class="rte-btn" title="Bullet list" data-action="click->rte#execCommand" data-command="insertUnorderedList"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/></svg></button>
+              <div class="rte-sep"></div>
+              <button type="button" class="rte-btn" title="Insert Image" data-action="click->rte#insertImage">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </button>
+            </div>
+            <div class="rte-area" 
+                 id="activity_body_editable" 
+                 contenteditable="true" 
+                 data-placeholder="How was the hike? Share your experience..."
+                 data-rte-target="editor"
+                 data-action="input->rte#updateHiddenInput">
+              <%= @hike.activity.body %>
+            </div>
+            <%= af.hidden_field :body, id: "activity_body_hidden", data: { rte_target: "hiddenInput" } %>
+            <input type="file" accept="image/*" class="hidden" data-rte-target="fileInput" data-action="change->rte#handleFileSelect" style="display: none;">
+          </div>
+        </div>
+
+        <div class="form-section" 
+             data-controller="tags" 
+             data-tags-available-value="<%= @available_tags.map { |t| { id: t.id, name: t.name } }.to_json %>"
+             data-tags-field-name-value="hike[activity_attributes][tag_ids][]">
+          <label class="form-label">Tags</label>
+          <div class="tags-container" data-tags-target="selectedContainer">
+            <% @hike.activity.tags.each do |tag| %>
+              <div class="selected-tag">
+                #<%= tag.name %>
+                <span class="remove-tag" data-action="click->tags#remove" data-id="<%= tag.id %>">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span>
+              </div>
+            <% end %>
+          </div>
+          <div class="tag-search-wrapper">
+            <input type="text" 
+                   data-tags-target="input"
+                   data-action="input->tags#filter focus->tags#filter"
+                   class="input-tags" 
+                   placeholder="Search tags (e.g. outdoors, mountains)..." 
+                   autocomplete="off">
+            <div data-tags-target="dropdown" class="tag-dropdown"></div>
+          </div>
+          <div data-tags-target="hiddenContainer">
+            <% @hike.activity.tag_ids.each do |tag_id| %>
+              <input type="hidden" name="hike[activity_attributes][tag_ids][]" value="<%= tag_id %>">
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="form-actions">
+        <div></div>
+        <div class="form-actions-right">
+          <%= link_to hike_path(@hike.activity), class: "btn-discard" do %>Cancel<% end %>
+          <%= f.submit "Update Hike", class: "btn-publish" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+{
+  const btnGpx = document.getElementById('btn_mode_gpx');
+  const btnManual = document.getElementById('btn_mode_manual');
+  const panelGpx = document.getElementById('mode_gpx_panel');
+  const panelManual = document.getElementById('mode_manual_panel');
+
+  function switchMode(mode) {
+    [btnGpx, btnManual].forEach(btn => btn.classList.remove('active'));
+    [panelGpx, panelManual].forEach(p => p.style.display = 'none');
+
+    if (mode === 'gpx') {
+      btnGpx.classList.add('active');
+      panelGpx.style.display = 'block';
+    } else {
+      btnManual.classList.add('active');
+      panelManual.style.display = 'block';
+    }
+  }
+
+  btnGpx.onclick = () => switchMode('gpx');
+  btnManual.onclick = () => switchMode('manual');
+
+  // Manual Sync
+  ['manual_trail_name', 'manual_distance_km', 'manual_elevation_gain'].forEach(id => {
+    document.getElementById(id).addEventListener('input', (e) => {
+      const fieldId = id.replace('manual_', 'hike_');
+      document.getElementById(fieldId).value = e.target.value;
+    });
+  });
+
+  // GPX Upload
+  const gpxDropzone = document.getElementById('gpx_dropzone');
+  const gpxFileInput = document.getElementById('gpx_file_input');
+  const gpxLabel = document.getElementById('gpx_dropzone_label');
+  const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+  if (gpxDropzone) {
+    gpxDropzone.onclick = () => gpxFileInput.click();
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(n => {
+      gpxDropzone.addEventListener(n, (e) => { e.preventDefault(); e.stopPropagation(); });
+    });
+    gpxDropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer.files.length) handleGpx(e.dataTransfer.files[0]);
+    });
+    gpxFileInput.onchange = (e) => {
+      if (e.target.files.length) handleGpx(e.target.files[0]);
+    };
+  }
+
+  async function handleGpx(file) {
+    gpxLabel.innerText = "Parsing " + file.name + "...";
+    const fd = new FormData();
+    fd.append('gpx_file', file);
+    try {
+      const resp = await fetch('/hikes/parse_gpx', {
+        method: 'POST',
+        headers: { 'X-CSRF-Token': csrf },
+        body: fd
+      });
+      const data = await resp.json();
+      if (data.points) {
+        document.getElementById('hike_trail_name').value = data.trail_name || '';
+        document.getElementById('hike_distance_km').value = data.distance_km || '';
+        document.getElementById('hike_elevation_gain').value = data.elevation_gain || '';
+        document.getElementById('hike_route').value = JSON.stringify(data.points);
+        
+        document.getElementById('manual_trail_name').value = data.trail_name || '';
+        document.getElementById('manual_distance_km').value = data.distance_km || '';
+        document.getElementById('manual_elevation_gain').value = data.elevation_gain || '';
+        
+        gpxLabel.innerText = "Updated from " + file.name;
+        setTimeout(() => switchMode('manual'), 800);
+      }
+    } catch(e) { console.error(e); }
+  }
+
+  // Duration
+  const hIn = document.getElementById('hike_duration_hours');
+  const mIn = document.getElementById('hike_duration_minutes');
+  const dHidden = document.getElementById('hike_duration');
+
+  function syncD() {
+    let parts = [];
+    if (hIn.value) parts.push(hIn.value + 'h');
+    if (mIn.value) parts.push(mIn.value + 'm');
+    dHidden.value = parts.join(' ');
+  }
+  hIn.oninput = mIn.oninput = syncD;
+}
+</script>

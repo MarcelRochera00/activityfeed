@@ -1,0 +1,180 @@
+/* ── Hike Specific Styles ─────────────────────────────── */
+
+.reading-info-box {
+  background: var(--slate-50); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 1.5rem; margin-bottom: 2rem;
+}
+
+.box-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-muted); 
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--slate-100);
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Book Search Header (Reused for Hike Search/GPX mode) */
+.book-search-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.search-option {
+  padding: 0.75rem 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: relative;
+  transition: color 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.search-option:hover {
+  color: var(--text-primary);
+}
+
+.search-option.active {
+  color: var(--text-primary);
+}
+
+.search-option.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #16a34a; /* Green 600 */
+}
+
+/* Book Search Bar */
+.book-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Show Page Sidebar Card */
+.activity-details-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.book-cover-mini {
+  width: 100%;
+  height: auto;
+  background: var(--slate-100);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.detail-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Duration Picker */
+.duration-picker {
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.25rem;
+  width: fit-content;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.duration-picker:focus-within {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.duration-segment {
+  display: flex;
+  align-items: center;
+}
+
+.duration-input {
+  border: none;
+  background: transparent;
+  width: 45px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  padding: 0.5rem 0;
+  appearance: textfield; /* Standard way to hide spinners */
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.duration-input:focus {
+  outline: none;
+}
+
+/* Aggressively hide spinners in all browsers */
+.duration-input::-webkit-inner-spin-button,
+.duration-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.duration-unit {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-right: 0.75rem;
+  margin-left: 0.25rem;
+  user-select: none;
+}
+
+.duration-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--slate-200);
+  margin: 0 0.25rem;
+}
+
+/* Override brand colors for Hike (using green theme) */
+.reading-page .brand-icon { background: #16a34a; }
+.reading-page .input-title:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1); }
+.reading-page .dropzone:hover { border-color: #16a34a; }
+.reading-page .dropzone.dragover { border-color: #16a34a; }
+.reading-page .rte-btn.active { color: #16a34a; }
+.reading-page .input-tags:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1); }
+.reading-page .tag-dropdown-item:hover { color: #16a34a; }
+.reading-page .btn-publish { background: #16a34a; border-color: #16a34a; }
+.reading-page .btn-publish:hover { background: #15803d; border-color: #15803d; }

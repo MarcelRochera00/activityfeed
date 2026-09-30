@@ -1,0 +1,33 @@
+<header class="app-header">
+  <div class="header-left">
+    <%= link_to authenticated_root_path, class: "brand-logo" do %>
+      <div class="brand-icon">⚡</div>
+      <span class="brand-name">ActivityFeed</span>
+    <% end %>
+    <div class="header-divider"></div>
+    <div class="welcome-msg">
+      Good <%= Time.current.hour < 12 ? 'morning' : (Time.current.hour < 18 ? 'afternoon' : 'evening') %>, 
+      <strong><%= current_user.username %></strong>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <%= form_with url: request.path, method: :get, local: true, class: "search-wrap", data: { controller: "auto-submit", turbo_frame: "feed_activities", turbo_action: "advance" } do |f| %>
+      <div class="search-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <%= f.text_field :q, placeholder: "Search experiences...", class: "search-input", value: params[:q], data: { action: "input->auto-submit#submit" } %>
+    <% end %>
+
+    <nav class="nav-links">
+      <%= link_to "Feed", feed_path, class: "nav-link #{'active' if controller_name == 'feed'}" %>
+      <%= link_to "Profile", profile_path(current_user.username), class: "nav-link #{'active' if controller_name == 'profiles'}" %>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+    </nav>
+
+    <%= link_to new_activity_path, class: "btn-new-activity" do %>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Activity
+    <% end %>
+  </div>
+</header>

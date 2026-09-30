@@ -1,0 +1,101 @@
+<% content_for :title, "Edit Profile" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "profile", "activities" %>
+<% end %>
+
+<nav class="create-nav">
+  <div class="nav-left">
+    <%= link_to profile_path(@user.username), class: "brand-logo" do %>
+      <div class="brand-icon">👤</div>
+      <span class="brand-name">ActivityFeed</span>
+    <% end %>
+    <span class="nav-sep">/</span>
+    <span class="nav-label">Edit Profile</span>
+  </div>
+  <%= link_to profile_path(@user.username), class: "btn-cancel" do %>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    Cancel
+  <% end %>
+</nav>
+
+<div class="create-page">
+  <div class="create-header">
+    <h1>Edit Profile</h1>
+    <p>Update how you appear to the community</p>
+  </div>
+
+  <%= form_with model: @user, url: update_profile_path(@user.username), method: :patch, local: true do |f| %>
+
+    <!-- Avatar Upload -->
+    <div class="form-section">
+      <label class="form-label">Profile Picture</label>
+      <div style="display: flex; align-items: center; gap: 2rem;">
+
+        <!-- Current avatar preview -->
+        <div class="profile-avatar-large" id="avatar-preview-wrap" style="margin-bottom: 0; flex-shrink: 0;">
+          <img id="avatar-preview-img" src="<%= avatar_url(@user) %>" alt="<%= @user.username %>">
+        </div>
+
+        <!-- Upload area -->
+        <div style="flex: 1;">
+          <label for="avatar-file-input" class="btn-discard" style="cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload photo
+          </label>
+          <%= f.file_field :profile_image, id: "avatar-file-input", accept: "image/*", style: "display: none;" %>
+          <p class="form-hint" style="margin: 0;">JPG, PNG or WebP. Square images work best.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Username -->
+    <div class="form-section">
+      <label class="form-label" for="user_username">Username</label>
+      <%= f.text_field :username, class: "input-title", id: "user_username",
+            placeholder: "your_username",
+            style: "font-size: 1rem;",
+            required: true %>
+      <p class="form-hint">Changing your username will update your profile URL.</p>
+    </div>
+
+    <!-- Bio -->
+    <div class="form-section">
+      <label class="form-label" for="user_description">Bio</label>
+      <%= f.text_area :description, class: "input-field", id: "user_description",
+            placeholder: "A sentence or two about yourself…",
+            rows: 3,
+            maxlength: 200,
+            style: "resize: vertical;" %>
+      <p class="form-hint">Max 200 characters.</p>
+    </div>
+
+    <!-- Location -->
+    <div class="form-section">
+      <label class="form-label" for="user_location">Location</label>
+      <%= f.text_field :location, class: "input-field", id: "user_location",
+            placeholder: "City, Country" %>
+    </div>
+
+    <div class="form-actions">
+      <div></div>
+      <div class="form-actions-right">
+        <%= link_to profile_path(@user.username), class: "btn-discard" do %>Cancel<% end %>
+        <%= f.submit "Save Changes", class: "btn-publish" %>
+      </div>
+    </div>
+
+  <% end %>
+</div>
+
+<script>
+  const fileInput = document.getElementById('avatar-file-input');
+  const previewImg = document.getElementById('avatar-preview-img');
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => { previewImg.src = ev.target.result; };
+    reader.readAsDataURL(file);
+  });
+</script>

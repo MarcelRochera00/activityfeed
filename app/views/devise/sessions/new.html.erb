@@ -1,0 +1,80 @@
+<% content_for :title, "Sign in" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "auth" %>
+<% end %>
+
+
+
+<div class="login-page">
+  <div class="login-split">
+
+    <!-- Brand side -->
+    <div class="login-brand">
+      <div class="login-brand-logo">
+        <div class="login-brand-icon">⚡</div>
+        <span class="login-brand-name">ActivityFeed</span>
+      </div>
+      <div class="login-brand-body">
+        <h2 class="login-brand-heading">Experience it.<br>Share it.</h2>
+        <p class="login-brand-sub">Track your hikes, rate your books, and log your concerts. Share all your adventures with your friends.</p>
+      </div>
+      <div class="login-brand-quote">
+      </div>
+    </div>
+
+    <!-- Form side -->
+    <div class="login-form-panel">
+      <h1 class="login-form-heading">Welcome</h1>
+      <p class="login-form-sub">Sign in to your account to continue</p>
+
+
+
+      <% if notice %>
+        <div style="background: #e0f2fe; color: #0369a1; padding: 0.75rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.85rem;">
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div style="background: #fee2e2; color: #b91c1c; padding: 0.75rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.85rem;">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <form action="<%= new_user_session_path %>" method="POST">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+        <div class="form-group">
+          <label for="login_email" class="form-label">Email</label>
+          <input type="email" name="user[email]" placeholder="your@email.com" class="form-input" id="login_email" autocomplete="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="login_password" class="form-label">Password</label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+          <input type="password" name="user[password]" placeholder="••••••••" class="form-input" id="login_password" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn-primary-navy" id="login_submit">Sign in</button>
+      </form>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-text">or just looking around?</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <%= form_with url: user_session_path, method: :post, local: true, class: "demo-login-form" do |f| %>
+        <%= f.hidden_field "user[email]", value: "marcel@example.com" %>
+        <%= f.hidden_field "user[password]", value: "password123" %>
+        <button type="submit" style="width: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0bac76ff 0%, #04885eff 100%); color: white; border: none; border-radius: 8px; font-size: 1.05rem; padding: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(16, 185, 129, 0.4)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.3)';">
+          Recruiter? Click for Demo Account
+        </button>
+      <% end %>
+
+
+
+      <p class="register-text">Don't have an account? <a href="#">Create one free</a></p>
+    </div>
+
+  </div>
+</div>

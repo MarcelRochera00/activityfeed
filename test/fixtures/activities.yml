@@ -1,0 +1,17 @@
+one:
+  title: Activity One
+  slug: activity-one
+  published_at: 2026-04-27 23:03:54
+  likes_count: 0
+  views_count: 0
+  user: one
+  activityable: one (Other)
+
+two:
+  title: Activity Two
+  slug: activity-two
+  published_at: 2026-04-27 23:03:54
+  likes_count: 0
+  views_count: 0
+  user: one
+  activityable: concert_one (Concert)

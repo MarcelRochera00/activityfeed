@@ -1,0 +1,30 @@
+<%# The goal-type-<ActivityType> class sets --goal-color via CSS.
+    It's used ONLY for the progress bar — no tinted bg or border. %>
+<div class="sidebar-goal-item goal-type-<%= goal.activity_type %>" id="<%= dom_id(goal) %>">
+
+  <%# Hidden ✕ button — only appears when the island enters .delete-mode
+      via the goal_manager Stimulus controller. Hidden by CSS by default. %>
+  <% if current_user == goal.user %>
+    <%= button_to goal_path(goal),
+          method: :delete,
+          class: "goal-delete-btn",
+          data: { turbo_confirm: "Delete this goal? Your progress will be lost." } do %>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    <% end %>
+  <% end %>
+
+  <span class="goal-type-badge"><%= goal.activity_type %></span>
+  <span class="sidebar-goal-title"><%= goal.description %></span>
+
+  <div class="progress-container">
+    <div class="progress-labels">
+      <span><%= goal.formatted_current %> / <%= goal.formatted_target %> <%= goal.unit %></span>
+      <span><%= goal.progress_percentage %>%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" style="width: <%= goal.progress_percentage %>%; background: var(--goal-color, var(--brand-accent));"></div>
+    </div>
+  </div>
+</div>

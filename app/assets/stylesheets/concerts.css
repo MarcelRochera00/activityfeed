@@ -1,0 +1,79 @@
+/* ── Concert Specific Styles ─────────────────────────────── */
+
+/* Concert Info Box */
+.concert-info-box {
+  background: var(--slate-50); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 1.5rem; margin-bottom: 2rem;
+}
+.box-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+/* Concert Selection Items */
+.concert-container {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.concert-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.concert-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.concert-item:hover { border-color: var(--slate-300); background: var(--slate-50); }
+.concert-item.selected {
+  border-color: #8b5cf6;
+  background: #fdfcff;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.05);
+}
+.concert-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--slate-300);
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.concert-item.selected .concert-dot {
+  background: #8b5cf6;
+  transform: scale(1.2);
+}
+.concert-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.concert-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.concert-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Override brand colors for Concerts if needed (using violet theme) */
+.concert-page .brand-icon { background: #8b5cf6; }
+.concert-page .input-title:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1); }
+.concert-page .dropzone:hover { border-color: #8b5cf6; }
+.concert-page .dropzone.dragover { border-color: #8b5cf6; }
+.concert-page .rte-btn.active { color: #8b5cf6; }
+.concert-page .input-tags:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1); }
+.concert-page .tag-dropdown-item:hover { color: #8b5cf6; }
+.concert-page .btn-publish { background: #8b5cf6; border-color: #8b5cf6; }
+.concert-page .btn-publish:hover { background: #7c3aed; border-color: #7c3aed; }

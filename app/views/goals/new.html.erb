@@ -1,0 +1,33 @@
+<% content_for :title, "Set New Goal" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "activities", "selection", "goals" %>
+<% end %>
+
+<!-- Nav: Matching the Activity Creation style -->
+<nav class="create-nav">
+  <div class="nav-left">
+    <%= link_to feed_path, class: "brand-logo" do %>
+      <div class="brand-icon">⚡</div>
+      <span class="brand-name">ActivityFeed</span>
+    <% end %>
+    <span class="nav-sep">/</span>
+    <span class="nav-label">Set New Goal</span>
+  </div>
+  <%= link_to profile_path(current_user.username), class: "btn-cancel" do %>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    Cancel
+  <% end %>
+</nav>
+
+<div class="selection-page" style="padding-top: 4rem;">
+  <div class="selection-header">
+    <h1>Setting a Milestone</h1>
+    <p>Define what you want to achieve and we'll track it automatically</p>
+  </div>
+
+  <div style="max-width: 500px; margin: 0 auto;">
+    <div class="goals-island">
+      <%= render "form", goal: @goal %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div id="comments_section" class="comments-section">
+  <h3 class="comments-title">Comments</h3>
+  
+  <div id="comments_list" class="comments-list">
+    <%= render activity.comments.order(created_at: :asc) %>
+  </div>
+
+  <% if user_signed_in? %>
+    <%= render "comments/form", activity: activity, comment: Comment.new %>
+  <% else %>
+    <div class="comments-login-prompt">
+      <%= link_to "Log in", new_user_session_path %> to join the conversation.
+    </div>
+  <% end %>
+</div>

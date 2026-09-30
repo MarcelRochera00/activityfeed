@@ -1,0 +1,77 @@
+<% content_for :title, "Feed" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "feed" %>
+<% end %>
+
+
+
+<%= render "feed/header", current_user: current_user %>
+
+<!-- ── Feed body ──────────────────────────────────────────── -->
+<div class="feed-container">
+  <div class="feed-layout">
+
+    <main>
+      <turbo-frame id="feed_activities" target="_top">
+        <p class="section-label">
+          Feed · 
+          <% if @new_posts_count > 0 %>
+            <%= pluralize(@new_posts_count, "new post") %> since yesterday
+          <% else %>
+            <%= @pagy.count %> total posts
+          <% end %>
+        </p>
+
+      <div id="activities">
+        <%= render partial: "activities/activity", collection: @activities, locals: { show_user: true, show_actions: false } %>
+      </div>
+
+      <% if @pagy.next %>
+        <div id="next_link" style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+          <%= link_to "Loading more...", feed_path(page: @pagy.next, q: params[:q]), data: { turbo_stream: true, controller: "infinite-scroll" }, class: "btn-qa-text" %>
+        </div>
+      <% end %>
+      </turbo-frame>
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <p class="section-label">Your Stats</p>
+        <div class="sidebar-stat"><span class="sidebar-stat-label">Activities</span><span class="sidebar-stat-value"><%= @user_activities_count %></span></div>
+        <div class="sidebar-stat"><span class="sidebar-stat-label">Following</span><span class="sidebar-stat-value"><%= current_user.followings_count %></span></div>
+        <div class="sidebar-stat"><span class="sidebar-stat-label">Followers</span><span class="sidebar-stat-value"><%= current_user.followers_count %></span></div>
+        <div class="sidebar-stat"><span class="sidebar-stat-label">Total Likes</span><span class="sidebar-stat-value"><%= number_to_human(@user_total_likes) %></span></div>
+      </div>
+
+      <div class="sidebar-card">
+        <p class="section-label">Trending</p>
+        <div class="trending-tags">
+          <a href="#" class="trending-tag">#travel</a>
+          <a href="#" class="trending-tag">#coding</a>
+          <a href="#" class="trending-tag">#photography</a>
+          <a href="#" class="trending-tag">#slowliving</a>
+          <a href="#" class="trending-tag">#rails</a>
+          <a href="#" class="trending-tag">#design</a>
+          <a href="#" class="trending-tag">#film</a>
+          <a href="#" class="trending-tag">#coffee</a>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <p class="section-label">Quick Actions</p>
+        <div class="quick-actions">
+          <%= link_to new_activity_path, class: "btn-qa-primary", id: "sidebar_new" do %>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Activity
+          <% end %>
+          <button class="btn-qa-text" id="toggle-dark-mode">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            Toggle Dark Mode
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+

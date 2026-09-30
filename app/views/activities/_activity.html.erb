@@ -1,0 +1,52 @@
+<article class="activity-card" id="activity_<%= activity.id %>">
+  <!-- Image 1/3 -->
+  <div class="card-img-wrap">
+    <% if activity.preview_image.attached? %>
+      <%= image_tag activity.preview_image, alt: activity.title, loading: "lazy" %>
+    <% else %>
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" alt="<%= activity.title %>" loading="lazy">
+    <% end %>
+  </div>
+
+  <!-- Content 2/3 -->
+  <div class="card-body-panel">
+    <div>
+      <div class="card-meta">
+        <% if local_assigns.fetch(:show_user, true) %>
+          <div class="card-avatar">
+            <%= image_tag avatar_url(activity.user), alt: activity.user.username %>
+          </div>
+          <span class="card-username">@<%= activity.user.username.presence || activity.user.email.split('@').first %></span>
+        <% end %>
+        <span class="card-time"><%= time_ago_in_words(activity.published_at || activity.created_at) %> ago</span>
+        <% if local_assigns.fetch(:show_actions, false) %>
+          <%= render "activities/actions", activity: activity %>
+        <% end %>
+      </div>
+      <h2 class="card-title">
+        <%= link_to activity.title, activity.specific_path, class: "stretched-link" %>
+      </h2>
+      <div class="card-text-wrap">
+        <div class="card-text">
+          <%= activity.body.to_plain_text.truncate(160) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="card-stats">
+        <%= render partial: "likes/like_button", locals: { activity: activity } %>
+        <%= link_to activity.specific_path(anchor: "comments_section"), class: "stat-btn", data: { turbo_frame: "_top" } do %>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <%= activity.comments_count %>
+        <% end %>
+      </div>
+
+      <div class="card-tags-container">
+        <% activity.tags.each do |tag| %>
+          <%= link_to "##{tag.name}", feed_path(q: "##{tag.name}"), class: "card-tag" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,13 @@
+<%= turbo_stream.append "activities" do %>
+  <%= render partial: "activities/activity", collection: @activities, locals: { show_user: true, show_actions: false } %>
+<% end %>
+
+<% if @pagy.next %>
+  <%= turbo_stream.replace "next_link" do %>
+    <div id="next_link" style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+      <%= link_to "Loading more...", feed_path(page: @pagy.next, q: params[:q]), data: { turbo_stream: true, controller: "infinite-scroll" }, class: "btn-qa-text" %>
+    </div>
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove "next_link" %>
+<% end %>

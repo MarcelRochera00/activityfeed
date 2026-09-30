@@ -1,0 +1,110 @@
+<% content_for :title, "Select Activity Type" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "activities", "selection" %>
+<% end %>
+
+
+
+<!-- Nav -->
+<nav class="create-nav">
+  <div class="nav-left">
+    <%= link_to feed_path, class: "brand-logo" do %>
+      <div class="brand-icon">⚡</div>
+      <span class="brand-name">ActivityFeed</span>
+    <% end %>
+    <span class="nav-sep">/</span>
+    <span class="nav-label">New Activity</span>
+  </div>
+  <%= link_to feed_path, class: "btn-cancel" do %>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    Cancel
+  <% end %>
+</nav>
+
+<div class="selection-page">
+  <div class="selection-header">
+    <h1>What's happening?</h1>
+    <p>Choose the type of activity you want to share</p>
+  </div>
+
+  <div class="type-grid">
+    <!-- Other -->
+    <%= link_to new_other_path, class: "type-card" do %>
+      <span class="type-badge">Available</span>
+      <div class="type-icon icon-post">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="type-info">
+        <span class="type-name">Other / Update</span>
+        <span class="type-desc">Just share what's on your mind today</span>
+      </div>
+    <% end %>
+
+    <!-- Concert -->
+    <%= link_to new_concert_path, class: "type-card" do %>
+      <span class="type-badge">New</span>
+      <div class="type-icon icon-concert">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </div>
+      <div class="type-info">
+        <span class="type-name">Concert</span>
+        <span class="type-desc">Log a show, artist details and your setlist</span>
+      </div>
+    <% end %>
+
+    <!-- Reading -->
+    <%= link_to new_reading_path, class: "type-card" do %>
+      <span class="type-badge">New</span>
+      <div class="type-icon icon-reading">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div class="type-info">
+        <span class="type-name">Reading</span>
+        <span class="type-desc">Track books, chapters and your highlights</span>
+      </div>
+    <% end %>
+
+    <!-- Hike -->
+    <%= link_to new_hike_path, class: "type-card" do %>
+      <span class="type-badge">New</span>
+      <div class="type-icon icon-hike">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+      </div>
+      <div class="type-info">
+        <span class="type-name">Hike</span>
+        <span class="type-desc">Share trails, distance and nature photography</span>
+      </div>
+    <% end %>
+
+    <!-- Restaurant (Placeholder) -->
+    <div class="type-card disabled">
+      <span class="type-badge">Coming Soon</span>
+      <div class="type-icon icon-restaurant">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+      </div>
+      <div class="type-info">
+        <span class="type-name">Restaurant</span>
+        <span class="type-desc">Review dishes, ambiance and dining experiences</span>
+      </div>
+    </div>
+
+    <!-- Trip (Placeholder) -->
+    <div class="type-card disabled">
+      <span class="type-badge">Coming Soon</span>
+      <div class="type-icon icon-trip">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="16" height="13" x="4" y="7" rx="2"></rect>
+          <path d="M9 7V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4"></path>
+          <path d="M12 11v4"></path>
+          <path d="M9 11v4"></path>
+          <path d="M15 11v4"></path>
+        </svg>
+      </div>
+      <div class="type-info">
+        <span class="type-name">Trip</span>
+        <span class="type-desc">Map out your journeys, flights and destinations</span>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="goal-card" id="<%= dom_id(goal) %>">
+  <% if goal.completed? %>
+    <span class="completed-badge">🏆 Completed</span>
+  <% end %>
+
+  <div class="goal-info">
+    <h3 class="goal-description"><%= goal.description %></h3>
+    <span class="goal-meta">Target: <%= goal.target_value %> <%= goal.unit %></span>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-labels">
+      <span><%= goal.current_value %> / <%= goal.target_value %> <%= goal.unit %></span>
+      <span><%= goal.progress_percentage %>%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" style="width: <%= goal.progress_percentage %>%"></div>
+    </div>
+  </div>
+
+  <div class="goal-actions">
+    <%= link_to edit_goal_path(goal), class: "btn-qa-text", style: "font-size: 0.75rem;" do %>
+      Edit
+    <% end %>
+
+    <%= button_to goal_path(goal), method: :delete, class: "btn-qa-text", style: "font-size: 0.75rem; color: #ef4444;", data: { confirm: "Are you sure?" } do %>
+      Delete
+    <% end %>
+  </div>
+</div>

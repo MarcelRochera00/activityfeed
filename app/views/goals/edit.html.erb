@@ -1,0 +1,16 @@
+<% content_for :title, "Edit Goal" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "goals" %>
+<% end %>
+
+<%= render "feed/header", current_user: current_user %>
+
+<div class="goals-container" style="max-width: 600px;">
+  <div class="goals-header">
+    <h1 class="profile-name">Edit Goal</h1>
+  </div>
+
+  <div class="goal-card">
+    <%= render "form", goal: @goal %>
+  </div>
+</div>

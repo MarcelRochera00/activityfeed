@@ -1,0 +1,28 @@
+<div class="show-header">
+  <div class="show-meta">
+    <div class="show-avatar">
+      <%= image_tag avatar_url(activity.user), alt: activity.user.username %>
+    </div>
+    <%= link_to activity.user.username, profile_path(activity.user.username), class: "show-username" %>
+    <span class="dot">·</span>
+    <time datetime="<%= activity.published_at.iso8601 %>">
+      <%= time_ago_in_words(activity.published_at) %> ago
+    </time>
+  </div>
+  
+  <h1 class="show-title"><%= activity.title %></h1>
+
+  <div class="show-tags">
+    <% activity.tags.each do |tag| %>
+      <%= link_to "##{tag.name}", feed_path(q: "##{tag.name}"), class: "show-tag" %>
+    <% end %>
+  </div>
+</div>
+
+<% if activity.preview_image.attached? %>
+  <%= image_tag activity.preview_image, class: "show-hero-img" %>
+<% end %>
+
+<div class="show-body trix-content">
+  <%= activity.body %>
+</div>

@@ -1,0 +1,117 @@
+:root {
+  /* Default Light Theme (Navy/Slate/White) */
+  --navy:          #1e293b;
+  --navy-hover:    #0f172a;
+  --slate-700:     #334155;
+  --slate-500:     #64748b;
+  --slate-400:     #94a3b8;
+  --slate-300:     #cbd5e1;
+  --slate-200:     #e2e8f0;
+  --slate-100:     #f1f5f9;
+  --slate-50:      #f8fafc;
+  --white:         #ffffff;
+  --border:        #e2e8f0;
+  --text-primary:  #0f172a;
+  --text-secondary:#475569;
+  --text-muted:    #94a3b8;
+  
+  --brand-accent:  #1e293b; /* Navy */
+  --brand-hover:   #0f172a;
+
+  --radius-sm:     5px;
+  --radius-md:     8px;
+  --radius-lg:     12px;
+  --shadow-sm:     0 1px 3px rgba(15,23,42,0.06),0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md:     0 4px 12px rgba(15,23,42,0.08),0 2px 4px rgba(15,23,42,0.04);
+}
+
+/* Editorial Dark Theme (Substack style) */
+html.dark-theme {
+  --navy:          #ff6b00; /* Editorial Orange */
+  --navy-hover:    #e66000;
+  
+  --slate-700:     #e4e4e7;
+  --slate-500:     #a1a1aa; /* Zinc-400 */
+  --slate-400:     #71717a;
+  --slate-300:     #3f3f46;
+  --slate-200:     #27272a;
+  --slate-100:     #18181b;
+  --slate-50:      #141414ff; /* Deep black bg */
+  
+  --white:         #161616; /* Dark gray cards */
+  --border:        #262626; /* Subtle border */
+  
+  --text-primary:  #f5f5f5; /* Solid white */
+  --text-secondary:#a1a1aa; /* Text base */
+  --text-muted:    #71717a;
+  
+  --brand-accent:  #ff6b00; /* Editorial Orange */
+  --brand-hover:   #e66000;
+  
+  --shadow-sm:     none; /* No shadows in editorial dark */
+  --shadow-md:     none;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; transition: background-color 0.3s ease; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--slate-50); color: var(--text-primary); min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
+::selection { background: var(--brand-accent); color: #fff; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 999px; }
+
+/* Flash Messages */
+.flash-container {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.flash {
+  pointer-events: auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 999px; /* Pill shape is cleaner for single lines */
+  box-shadow: var(--shadow-md);
+  padding: 0.6rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  animation: toastIn 0.3s ease-out;
+}
+
+.flash-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.flash-icon {
+  flex-shrink: 0;
+}
+
+.flash-notice .flash-icon { color: #10b981; }
+.flash-alert .flash-icon { color: #ef4444; }
+
+.flash-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0 0 0.5rem;
+  margin-left: 0.5rem;
+  border-left: 1px solid var(--border);
+  line-height: 1;
+  opacity: 0.6;
+}
+.flash-close:hover { opacity: 1; }
+
+@keyframes toastIn {
+  from { transform: translateY(-1rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
