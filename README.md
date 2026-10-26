@@ -10,12 +10,12 @@ The goal of the project is to demonstrate full-stack Rails fundamentals in an ap
 - Publish rich-text posts with a cover image and tags.
 - Browse a paginated activity feed with title and tag search.
 - Follow users, like activities, and add or remove comments.
-- Create activity-based goals that automatically recalculate progress. Hike goals can track total distance in kilometres.
+- Create activity-based goals that automatically recalculate progress. Ex: Hike goals can track total distance in kilometres.
 - Upload GPX files to calculate hike distance, elevation gain, and duration, then display the recorded route on a Leaflet map.
 - Search book metadata through the Open Library API.
-- Search artists and setlist information through the Setlist.fm API when an API key is configured.
+- Search artists and setlist information for concerts through the Setlist.fm API when an API key is configured.
 - Use friendly, history-aware URLs so renamed activities retain redirects from their previous slug.
-- Switch between light and dark themes; the selected theme is stored in the browser.
+- Switch between light and dark themes. The selected theme is stored in the browser.
 
 ## Project Status
 
@@ -100,7 +100,7 @@ Activities use Rails delegated types: each `Activity` owns shared social and con
 
 The feed preloads its associations to avoid common N+1 query issues, and counter caches keep like, comment, follower, and following counts inexpensive to display.
 
-## Roadmap
+## Future improvements
 
 - Restaurant, trip, artwork, and recipe activity types
 - Broader system-test coverage
@@ -132,7 +132,3 @@ Dynamic dark and light theme toggling with smooth transitions.
 <img width="1685" alt="feed" src="https://github.com/user-attachments/assets/2df1444d-8297-4b9c-9f7a-8e66cf05e9d6" />
 
 Interactive main feed supporting likes, comments, and tag-based filtering. Profile also displays goals, short description and profile pictures for customization.
-
-## Final notes
-
-This repository is shared to show my work learning Rails through a project larger than a tutorial. The codebase intentionally includes both completed functionality and a visible roadmap so that the technical decisions, current limits, and next iterations are clear.
