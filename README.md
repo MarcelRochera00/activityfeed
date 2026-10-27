@@ -1,21 +1,59 @@
 # ActivityFeed
 
-ActivityFeed is a portfolio project that I built while learning Ruby on Rails. It is a social activity journal where people can publish experiences, follow other users, and interact with a feed of hikes, book reviews, concerts, and general updates.
+ActivityFeed is a portfolio project that I built while learning Ruby on Rails. It is a social activity journal where people can publish experiences, follow other users, and interact with a feed of hikes, book reviews, concerts, and other types of activities.
 
-The goal of the project is to demonstrate full-stack Rails fundamentals in an application with real relationships, rich content, external APIs, asynchronous UI updates, and automated checks. It is not intended to be a production social network.
 
-## What It Does
+---
 
-- Create, edit, and delete four activity types: **Hikes**, **Readings**, **Concerts**, and **Other updates**.
-- Publish rich-text posts with a cover image and tags.
-- Browse a paginated activity feed with title and tag search.
-- Follow users, like activities, and add or remove comments.
-- Create activity-based goals that automatically recalculate progress. Ex: Hike goals can track total distance in kilometres.
-- Upload GPX files to calculate hike distance, elevation gain, and duration, then display the recorded route on a Leaflet map.
-- Search book metadata through the Open Library API.
-- Search artists and setlist information for concerts through the Setlist.fm API when an API key is configured.
-- Use friendly, history-aware URLs so renamed activities retain redirects from their previous slug.
-- Switch between light and dark themes. The selected theme is stored in the browser.
+<p align="center">
+<img width="1508" height="758" alt="Main feed: likes, comments and tag filtering" width="720" src="https://github.com/user-attachments/assets/69c79d5b-6783-45ac-b7c9-d959390bb55f" />
+</p>
+
+
+
+## What you can do?
+
+- **Publish**, **edit** and **delete** four activity types: **Hikes**, **Readings**, **Concerts**, and **Other updates**, each its own rich-text post with a cover image and tags.
+- **Browse** a paginated activity feed by title or tag search.
+- **Follow** users, like activities, and add or remove comments.
+- **Track** activity-based goals that automatically recalculate progress. Ex: Hike goals can track total distance in kilometres.
+- Upload **GPX** files to calculate hike distance, elevation gain, and duration, then display the recorded route on a Leaflet map.
+- **Search** book metadata through the Open Library API.
+- **Search** artists and setlist information for concerts through the Setlist.fm API when an API key is configured.
+- Use friendly, history-aware URLs so renamed activities **retain redirects** from their previous slug.
+- Switch between **light and dark themes**. The selected theme is stored in the browser.
+
+
+## Screenshots and Demos
+
+### Hike Post Details
+<img width="1672" alt="hike_post" src="https://github.com/user-attachments/assets/dbd91052-ef2d-4a6b-8817-85663541c736" />
+
+Published post view showing rich text and custom hike data, including uploaded path visualization.
+
+---
+
+### Dark and light Mode
+<img width="1685" alt="toggle_dark_mode" src="https://github.com/user-attachments/assets/676e9163-e467-4280-a186-e43540169a98" />
+
+Dynamic dark and light theme toggling with smooth transitions.
+
+---
+
+<img width="1508" height="758" alt="Peek 2026-10-28 00-02" src="https://github.com/user-attachments/assets/b289ab42-da0b-4030-987b-bd423e5f4c40" />
+
+Create a new reading post using the open library API service to fetch cover, author, title and ISBN.
+
+---
+
+### Main feed and profile interaction
+
+<p align="center">
+<img width="1508" height="758" alt="Main feed: likes, comments and tag filtering" width="720" src="https://github.com/user-attachments/assets/69c79d5b-6783-45ac-b7c9-d959390bb55f" />
+</p>
+
+Interactive main feed supporting likes, comments, and tag-based filtering. Profile also displays goals, short description and profile pictures for customization.
+
 
 ## Project Status
 
@@ -111,24 +149,3 @@ The feed preloads its associations to avoid common N+1 query issues, and counter
 - [Open Library](https://openlibrary.org/) for book search
 - [Setlist.fm](https://www.setlist.fm/) for artist and setlist search
 - [Leaflet](https://leafletjs.com/) for map rendering
-
-## Screenshots and Demos
-
-### Hike Post Details
-<img width="1672" alt="hike_post" src="https://github.com/user-attachments/assets/dbd91052-ef2d-4a6b-8817-85663541c736" />
-
-Published post view showing rich text and custom hike data, including uploaded path visualization.
-
----
-
-### Dark and light Mode
-<img width="1685" alt="toggle_dark_mode" src="https://github.com/user-attachments/assets/676e9163-e467-4280-a186-e43540169a98" />
-
-Dynamic dark and light theme toggling with smooth transitions.
-
----
-
-### Main feed and profile interaction
-<img width="1685" alt="feed" src="https://github.com/user-attachments/assets/2df1444d-8297-4b9c-9f7a-8e66cf05e9d6" />
-
-Interactive main feed supporting likes, comments, and tag-based filtering. Profile also displays goals, short description and profile pictures for customization.
