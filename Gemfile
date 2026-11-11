@@ -41,7 +41,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # Image processing 2.x doesn't come with ruby-vips pre-installed anymore. I need it to resize images.
-gem "ruby-vips"
+gem "ruby-vips", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
