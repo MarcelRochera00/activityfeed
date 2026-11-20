@@ -28,6 +28,7 @@
     </div>
 
     <%= form_with model: @reading, local: true, id: "new_reading_form", data: { controller: "book-search" } do |f| %>
+      <%= render "shared/form_errors", object: @reading %>
       
       <!-- Reading Specifics -->
       <div class="reading-info-box">

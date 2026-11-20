@@ -28,7 +28,7 @@
     </div>
 
     <%= form_with model: @reading, local: true, id: "edit_reading_form" do |f| %>
-      
+      <%= render "shared/form_errors", object: @reading %>
       <!-- Reading Specifics (Read-only metadata in edit mode usually) -->
       <div class="reading-info-box">
         <div class="box-title">

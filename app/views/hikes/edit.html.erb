@@ -28,12 +28,13 @@
     </div>
 
     <%= form_with model: @hike, local: true, id: "edit_hike_form" do |f| %>
+      <%= render "shared/form_errors", object: @hike %>
       
       <div class="form-section">
         <label class="form-label">Mode Selection</label>
-        <div class="mode-toggle">
-          <button type="button" class="mode-btn active" id="btn_mode_manual">Manual Edit</button>
-          <button type="button" class="mode-btn" id="btn_mode_gpx">Re-upload GPX</button>
+        <div class="book-search-header">
+          <button type="button" class="search-option active" id="btn_mode_manual">Manual Edit</button>
+          <button type="button" class="search-option" id="btn_mode_gpx">Re-upload GPX</button>
         </div>
       </div>
 

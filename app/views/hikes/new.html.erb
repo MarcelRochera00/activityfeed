@@ -28,7 +28,7 @@
     </div>
 
     <%= form_with model: @hike, local: true, id: "new_hike_form" do |f| %>
-      
+      <%= render "shared/form_errors", object: @hike %>
       <!-- Hike Specifics -->
       <div class="reading-info-box">
         <div class="box-title">
