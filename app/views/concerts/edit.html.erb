@@ -28,6 +28,7 @@
     </div>
 
     <%= form_with model: @concert, local: true, id: "edit_concert_form" do |f| %>
+      <%= render "shared/form_errors", object: @concert %>
       
       <!-- Concert Data (Read-only in edit usually) -->
       <div class="concert-info-box">

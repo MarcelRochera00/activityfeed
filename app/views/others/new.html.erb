@@ -28,17 +28,8 @@
     <p>Share your experience with the community</p>
   </div>
 
-  <% if @other.errors.any? || (@other.activity&.errors&.any?) %>
-    <div style="background: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
-      <h3 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem;">Please review the following issues:</h3>
-      <ul style="padding-left: 1.5rem; font-size: 0.85rem;">
-        <% @other.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
-        <% @other.activity.errors.full_messages.each do |msg| %><li>Activity: <%= msg %></li><% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <%= form_with model: @other, url: others_path, method: :post, local: true, id: "new_activity_form" do |f| %>
+    <%= render "shared/form_errors", object: @other %>
     <%= f.fields_for :activity do |af| %>
       <!-- Title -->
       <div class="form-section">

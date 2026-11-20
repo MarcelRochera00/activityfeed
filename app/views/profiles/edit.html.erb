@@ -25,6 +25,7 @@
   </div>
 
   <%= form_with model: @user, url: update_profile_path(@user.username), method: :patch, local: true do |f| %>
+    <%= render "shared/form_errors", object: @user %>
 
     <!-- Avatar Upload -->
     <div class="form-section">

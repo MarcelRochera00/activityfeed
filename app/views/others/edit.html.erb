@@ -25,6 +25,7 @@
   </div>
 
   <%= form_with model: @other, local: true, id: "edit_activity_form" do |f| %>
+    <%= render "shared/form_errors", object: @other %>
     <%= f.fields_for :activity do |af| %>
       <%= af.hidden_field :id %>
       

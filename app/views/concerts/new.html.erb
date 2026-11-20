@@ -27,17 +27,8 @@
       <p>Share your concert experience and setlist with others</p>
     </div>
 
-    <% if @concert.errors.any? || (@concert.activity&.errors&.any?) %>
-      <div style="background: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
-        <h3 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem;">Please review the errors:</h3>
-        <ul style="padding-left: 1.5rem; font-size: 0.85rem;">
-          <% @concert.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
-          <% @concert.activity.errors.full_messages.each do |msg| %><li>Activity: <%= msg %></li><% end %>
-        </ul>
-      </div>
-    <% end %>
-
     <%= form_with model: @concert, local: true, id: "new_concert_form" do |f| %>
+      <%= render "shared/form_errors", object: @concert %>
       
       <!-- Concert Specifics -->
       <div class="concert-info-box">
