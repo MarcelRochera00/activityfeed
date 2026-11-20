@@ -1,16 +1,5 @@
 <%= turbo_frame_tag "comment-form-#{activity.id}" do %>
-
-  <% if comment.errors.any? %>
-    <div class="error-summary" style="background: #fef2f2; border: 1px solid #fecaca; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
-      <h4 style="color: #991b1b; font-size: 0.9rem; margin-bottom: 0.5rem;"><%= pluralize(comment.errors.count, "error") %> prevented this comment from being saved:</h4>
-      <ul style="color: #b91c1c; font-size: 0.85rem; padding-left: 1.25rem;">
-        <% comment.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render "shared/form_errors", object: comment %>
   <div class="comment-form-container">
     <div class="comment-avatar">
       <%= image_tag avatar_url(current_user), alt: current_user.username %>
