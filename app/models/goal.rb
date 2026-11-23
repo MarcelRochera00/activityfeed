@@ -26,17 +26,18 @@ class Goal < ApplicationRecord
     unit.downcase == "count" ? target_value.to_i : target_value
   end
 
-  # The "Magic" recalculation logic
+  # The recalculation logic
   def sync_with_activities
     activities = user.activities.where(activityable_type: activity_type)
+    new_activities = activities.where("published_at >= ?", created_at)
 
     new_value = if unit.downcase == "count" || unit.downcase == "activities"
-      activities.count
+      new_activities.count
     elsif unit.downcase == "km" && activity_type == "Hike"
-      activities.joins("INNER JOIN hikes ON activities.activityable_id = hikes.id AND activities.activityable_type = 'Hike'")
+      new_activities.joins("INNER JOIN hikes ON activities.activityable_id = hikes.id AND activities.activityable_type = 'Hike'")
                 .sum("hikes.distance_km")
     else
-      activities.count
+      new_activities.count
     end
 
     update(current_value: new_value)
