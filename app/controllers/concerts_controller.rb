@@ -1,6 +1,4 @@
 class ConcertsController < ApplicationController
-  before_action :authenticate_user!
-
   include ActivityActions
   def search_artists
     artists = SetlistFmService.search_artists(params[:q])

@@ -1,6 +1,4 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user!
-
   # GET /activities/new
   # Displays the activity type selection grid
   def new

@@ -1,5 +1,4 @@
 class GoalsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_goal, only: [ :destroy ]
 
   def new

@@ -1,6 +1,4 @@
 class OthersController < ApplicationController
-  before_action :authenticate_user!
-
   include ActivityActions
 
   private

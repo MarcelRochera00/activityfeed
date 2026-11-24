@@ -1,5 +1,4 @@
 class ReadingsController < ApplicationController
-  before_action :authenticate_user!
   include ActivityActions
 
   def search_books
